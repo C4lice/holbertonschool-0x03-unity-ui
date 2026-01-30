@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -7,7 +8,8 @@ public class PlayerController : MonoBehaviour
     public float speed = 5f;
     // Points de vie du joueur
     public int health = 5;
-
+    // Référence au Text pour afficher le score
+    public Text scoreText;
     // Référence au Rigidbody
     private Rigidbody rb;
     // Score du joueur
@@ -53,7 +55,7 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Pickup"))
         {
             score++;
-            Debug.Log("Score: " + score);
+            SetScoreText();
             other.gameObject.SetActive(false);
         }
         // Gestion des pièges
@@ -67,5 +69,9 @@ public class PlayerController : MonoBehaviour
         {
         Debug.Log("You win!");
         }
+    }
+    void SetScoreText()
+    {
+        scoreText.text = "Score: " + score;
     }
 }
