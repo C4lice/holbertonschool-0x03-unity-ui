@@ -46,12 +46,16 @@ public class PlayerController : MonoBehaviour
     {
         if (health <= 0)
         {
-            Debug.Log("Game Over!");
-            health = 5;
-            score = 0;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            winLoseBG.SetActive(true);
+
+            winLoseText.text = "Game Over!";
+            winLoseText.color = Color.white;
+
+            Image bgImage = winLoseBG.GetComponent<Image>();
+            bgImage.color = Color.red;
         }
     }
+
     // Gestion des collisions avec les triggers
     void OnTriggerEnter(Collider other)
     {
