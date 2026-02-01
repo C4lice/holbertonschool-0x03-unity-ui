@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     public int health = 5;
     // Référence au Text pour afficher le score
     public Text scoreText;
+    // Référence au Text pour afficher la santé
+    public Text healthText;
     // Référence au Rigidbody
     private Rigidbody rb;
     // Score du joueur
@@ -19,6 +21,9 @@ public class PlayerController : MonoBehaviour
     {
         // On récupère le Rigidbody attaché au Player
         rb = GetComponent<Rigidbody>();
+        // Initialisation de l’affichage du score et de la santé
+            SetScoreText();
+            SetHealthText();
     }
     // Gestion du mouvement du joueur
     void FixedUpdate()
@@ -39,12 +44,8 @@ public class PlayerController : MonoBehaviour
         if (health <= 0)
         {
             Debug.Log("Game Over!");
-
-            // Réinitialiser les valeurs
             health = 5;
             score = 0;
-
-            // Recharger la scène actuelle
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
@@ -62,7 +63,7 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Trap"))
         {
             health--;
-            Debug.Log("Health: " + health);
+            SetHealthText();
         }
         // Gestion de l’arrivée au but
         if (other.CompareTag("Goal"))
@@ -73,5 +74,9 @@ public class PlayerController : MonoBehaviour
     void SetScoreText()
     {
         scoreText.text = "Score: " + score;
+    }
+    void SetHealthText()
+    {
+        healthText.text = "Health: " + health;
     }
 }
