@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
     public Text scoreText;
     // Référence au Text pour afficher la santé
     public Text healthText;
+    // Références pour l’affichage de la victoire/défaite
+    public GameObject winLoseBG;
+    public Text winLoseText;
     // Référence au Rigidbody
     private Rigidbody rb;
     // Score du joueur
@@ -68,7 +71,13 @@ public class PlayerController : MonoBehaviour
         // Gestion de l’arrivée au but
         if (other.CompareTag("Goal"))
         {
-        Debug.Log("You win!");
+            winLoseBG.SetActive(true);
+
+            winLoseText.text = "You Win!";
+            winLoseText.color = Color.black;
+
+            Image bgImage = winLoseBG.GetComponent<Image>();
+            bgImage.color = Color.green;
         }
     }
     void SetScoreText()
