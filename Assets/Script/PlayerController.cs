@@ -45,6 +45,11 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        // Si le joueur appuie sur Echap
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("menu");
+        }
         // Vérifier la santé du joueur
         if (health <= 0 && !gameEnded)
         {
