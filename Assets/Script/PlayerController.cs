@@ -19,7 +19,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     // Score du joueur
     private int score = 0;
-
+    // Indicateur de fin de jeu
+    private bool gameEnded = false;
     void Start()
     {
         // On récupère le Rigidbody attaché au Player
@@ -44,15 +45,16 @@ public class PlayerController : MonoBehaviour
     // Vérification de la santé du joueur
     void Update()
     {
-        if (health <= 0)
+        if (health <= 0 && !gameEnded)
         {
-            winLoseBG.SetActive(true);
+            gameEnded = true;
 
+            winLoseBG.SetActive(true);
             winLoseText.text = "Game Over!";
             winLoseText.color = Color.white;
+            winLoseBG.GetComponent<Image>().color = Color.red;
 
-            Image bgImage = winLoseBG.GetComponent<Image>();
-            bgImage.color = Color.red;
+            StartCoroutine(LoadScene(3));
         }
     }
 
@@ -73,16 +75,22 @@ public class PlayerController : MonoBehaviour
             SetHealthText();
         }
         // Gestion de l’arrivée au but
-        if (other.CompareTag("Goal"))
+        if (other.CompareTag("Goal") && !gameEnded)
         {
-            winLoseBG.SetActive(true);
+            gameEnded = true;
 
+            winLoseBG.SetActive(true);
             winLoseText.text = "You Win!";
             winLoseText.color = Color.black;
+            winLoseBG.GetComponent<Image>().color = Color.green;
 
-            Image bgImage = winLoseBG.GetComponent<Image>();
-            bgImage.color = Color.green;
+            StartCoroutine(LoadScene(3));
         }
+    }
+    IEnumerator LoadScene(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     void SetScoreText()
     {
